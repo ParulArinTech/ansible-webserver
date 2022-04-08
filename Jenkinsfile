@@ -21,7 +21,7 @@ pipeline{
     }
         stage('Download Ansible Code'){
             steps{
-                git credentialsId: 'git-repo-creds', url: 'git@github.com:ParulArinTech/ansible-webserver.git' | tee  ansible
+                git credentialsId: 'git-repo-creds', url: 'git@github.com:ParulArinTech/ansible-webserver.git'
             }
         }
     }
