@@ -8,7 +8,7 @@ pipeline{
         }
         stage('Installing Ansible'){
             steps{
-              sh 'sudo apt install wget tree unzip ansible python'
+              sh 'sudo apt install -y wget tree unzip ansible python'
             }
         }
         stage('third stage'){
