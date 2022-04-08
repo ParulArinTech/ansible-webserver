@@ -1,0 +1,57 @@
+---
+- name: test website
+  hosts: webservers
+  become: yes
+  become_user: root
+
+  tasks:
+  - name: checking port 80 on managed node
+    wait_for:
+      port: 80
+      state: started
+      timeout: 3
+  - name: verify apache availability
+    uri:
+      url: http://{{ ansible_host }}/index.html
+    delegate_to: localhost
+  - name: stat apache2
+    stat:
+      path: /usr/sbin/apache2
+    register: i
+  - name: fail if apache2 doesnt exists
+    assert:
+      that:
+        - "i.stat.exists"
+      fail_msg: "apache2 does not exists"
+      success_msg: "apache2 exists"
+  - name: Verify apache2 is enabled
+    shell: systemctl list-unit-files | grep apache2.service | awk -F\  '{print $2}'
+    register: c
+  - name: fail if apache2 not enabled
+    assert:
+      that:
+        - "c.stdout == 'enabled'"
+      fail_msg: "apache2 is not enabled"
+      success_msg: "apache2 is enabled"
+  - name: check index.html exists or not
+    stat:
+      path: /var/www/html/index.html
+    register: a
+  - name: verify index.html exist & owned by root
+    assert:
+      that:
+        - "a.stat.exists"
+        - "a.stat.pw_name == 'root'"
+      fail_msg: "index.html doesnt exists"
+      success_msg: "index.html do exists"
+  - name: verify vars.html exists
+    stat:
+      path: /var/www/html/vars.html
+    register: v
+  - name: verify vars.html exists & owned by root
+    assert:
+      that: 
+        - "v.stat.exists"
+        - "v.stat.pw_name == 'root'"
+      fail_msg: "vars.html not exists"
+      success_msg: "vars.html exists"
