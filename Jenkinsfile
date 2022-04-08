@@ -32,5 +32,17 @@ pipeline{
             }
             
         }
+        stage('send slack notification'){
+            steps{
+                slackSend color: 'warning', message: "Parul: Please approve ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.JOB_URL} | Open>)"
+                
+            }
+            
+        }
+        stage('request input'){
+            steps{
+                input 'please approve / deny this build'
+            }
+        }
     }
 }
