@@ -45,4 +45,12 @@ pipeline{
             }
         }
     }
+     post{
+        success{
+            slackSend color: 'warning', message: "Build ${env.JOB_NAME} ${env.BUILD_NUMBER} was Successful!"
+        }
+        failure{
+            slackSend color: 'warning', message: "Build ${env.JOB_NAME} ${env.BUILD_NUMBER} Failed!"
+        }
+    }
 }
