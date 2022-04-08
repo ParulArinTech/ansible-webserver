@@ -6,9 +6,9 @@ pipeline{
                 cleanWs()
             }
         }
-        stage('Second stage'){
+        stage('Installing Ansible'){
             steps{
-                echo "second stage"
+              sh 'sudo apt install wget tree unzip ansible python'
             }
         }
         stage('third stage'){
