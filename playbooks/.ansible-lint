@@ -1,2 +1,6 @@
 skip_list:
   - '403'
+  - '201'  # Trailing whitespace                                             │
+  - '301'  # Commands should not change things if nothing needs doing        │
+  - '303'  # Using command rather than module                                │
+  - '306' 
