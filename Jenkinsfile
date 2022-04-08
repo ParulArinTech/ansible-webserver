@@ -19,9 +19,9 @@ pipeline{
             }
         }
     }
-        stage('third stage'){
+        stage('Download Ansible Code'){
             steps{
-                echo "third stage"
+                git credentialsId: 'agent-key', url: 'git@github.com:ParulArinTech/ansible-webserver.git'
             }
         }
     }
