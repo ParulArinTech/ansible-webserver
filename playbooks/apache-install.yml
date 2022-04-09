@@ -29,4 +29,4 @@
   - name: Add content to index.html
     lineinfile:
       path: /var/www/html/index.html
-      line: Welcome to Ansible!!
+      line: “Hello Happy Ansible World!”
